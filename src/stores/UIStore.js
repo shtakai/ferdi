@@ -1,20 +1,16 @@
-import {
-  action, observable, computed, reaction,
-} from 'mobx';
 import { theme } from '@meetfranz/theme';
 import { remote } from 'electron';
-
-import Store from './lib/Store';
+import { action, computed, observable, reaction } from 'mobx';
 import { isMac } from '../environment';
+import Store from './lib/Store';
+
 
 const { nativeTheme, systemPreferences } = remote;
 
 export default class UIStore extends Store {
   @observable showServicesUpdatedInfoBar = false;
 
-  @observable isOsDarkThemeActive = isMac
-    ? nativeTheme.shouldUseDarkColors
-    : false;
+  @observable shouldUseDarkColors = nativeTheme.shouldUseDarkColors;
 
   constructor(...args) {
     super(...args);
@@ -31,7 +27,7 @@ export default class UIStore extends Store {
       systemPreferences.subscribeNotification(
         'AppleInterfaceThemeChangedNotification',
         () => {
-          this.isOsDarkThemeActive = nativeTheme.shouldUseDarkColors;
+          this.shouldUseDarkColors = nativeTheme.shouldUseDarkColors;
           this.actions.service.shareSettingsWithServiceProcess();
         },
       );
@@ -56,16 +52,12 @@ export default class UIStore extends Store {
   }
 
   @computed get isDarkThemeActive() {
-    const isMacWithAdaptableInDarkMode = isMac
+    const activeAdaptableDarkMode =  this.stores.settings.all.app.darkMode
       && this.stores.settings.all.app.adaptableDarkMode
-      && this.isOsDarkThemeActive;
-    const isMacWithoutAdaptableInDarkMode = isMac
-      && this.stores.settings.all.app.darkMode
+      && this.shouldUseDarkColors;
+    const forcedDarkMode = this.stores.settings.all.app.darkMode
       && !this.stores.settings.all.app.adaptableDarkMode;
-    const isNotMacInDarkMode = !isMac && this.stores.settings.all.app.darkMode;
-    return !!(isMacWithAdaptableInDarkMode
-      || isMacWithoutAdaptableInDarkMode
-      || isNotMacInDarkMode);
+    return activeAdaptableDarkMode || forcedDarkMode
   }
 
   @computed get theme() {

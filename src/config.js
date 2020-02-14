@@ -54,7 +54,7 @@ export const DEFAULT_APP_SETTINGS = {
   showMessageBadgeWhenMuted: true,
   enableSpellchecking: true,
   spellcheckerLanguage: 'en-us',
-  darkMode: process.platform === 'darwin' ? nativeTheme.shouldUseDarkColors : false, // We can't use refs from `./environment` at this time
+  darkMode: nativeTheme.shouldUseDarkColors,
   locale: '',
   fallbackLocale: 'en-US',
   beta: false,

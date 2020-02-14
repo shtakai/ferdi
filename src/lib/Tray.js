@@ -1,6 +1,4 @@
-import {
-  app, Tray, Menu, systemPreferences, nativeTheme, nativeImage,
-} from 'electron';
+import { app, Menu, nativeImage, nativeTheme, systemPreferences, Tray } from 'electron';
 import path from 'path';
 
 const FILE_EXTENSION = process.platform === 'win32' ? 'ico' : 'png';
@@ -86,7 +84,7 @@ export default class TrayIcon {
   _getAsset(type, asset) {
     let { platform } = process;
 
-    if (platform === 'darwin' && nativeTheme.shouldUseDarkColors) {
+    if (nativeTheme.shouldUseDarkColors) {
       platform = `${platform}-dark`;
     }
 

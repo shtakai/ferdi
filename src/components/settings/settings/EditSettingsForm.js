@@ -1,18 +1,18 @@
 import { remote } from 'electron';
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
+import PropTypes from 'prop-types';
+import React, { Component, Fragment } from 'react';
 import { defineMessages, intlShape } from 'react-intl';
-
-import Form from '../../../lib/Form';
-import Button from '../../ui/Button';
-import Toggle from '../../ui/Toggle';
-import Select from '../../ui/Select';
-import PremiumFeatureContainer from '../../ui/PremiumFeatureContainer';
-import Input from '../../ui/Input';
-
 import { FRANZ_TRANSLATION } from '../../../config';
 import { isMac } from '../../../environment';
+import Form from '../../../lib/Form';
+import Button from '../../ui/Button';
+import Input from '../../ui/Input';
+import PremiumFeatureContainer from '../../ui/PremiumFeatureContainer';
+import Select from '../../ui/Select';
+import Toggle from '../../ui/Toggle';
+
+
 
 function escapeHtml(unsafe) {
   return unsafe
@@ -126,7 +126,7 @@ const messages = defineMessages({
   },
   updateStatusSearching: {
     id: 'settings.app.updateStatusSearching',
-    defaultMessage: '!!!Is searching for update',
+    defaultMessage: '!!!Searching for update',
   },
   updateStatusAvailable: {
     id: 'settings.app.updateStatusAvailable',
@@ -450,7 +450,7 @@ export default @observer class EditSettingsForm extends Component {
             <Hr />
 
             {isMac && <Toggle field={form.$('adaptableDarkMode')} />}
-            {!(isMac && isAdaptableDarkModeEnabled) && <Toggle field={form.$('darkMode')} disabled={isAdaptableDarkModeEnabled} />}
+            {!isAdaptableDarkModeEnabled && <Toggle field={form.$('darkMode')} disabled={isAdaptableDarkModeEnabled} />}
             {(isDarkmodeEnabled || isAdaptableDarkModeEnabled) && (
               <>
                 <Toggle field={form.$('universalDarkMode')} />
