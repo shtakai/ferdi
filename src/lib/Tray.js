@@ -1,4 +1,6 @@
-import { app, Menu, nativeImage, nativeTheme, systemPreferences, Tray } from 'electron';
+import {
+  app, Menu, nativeImage, nativeTheme, systemPreferences, Tray,
+} from 'electron';
 import path from 'path';
 
 const FILE_EXTENSION = process.platform === 'win32' ? 'ico' : 'png';

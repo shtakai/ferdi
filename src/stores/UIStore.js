@@ -1,6 +1,8 @@
 import { theme } from '@meetfranz/theme';
 import { remote } from 'electron';
-import { action, computed, observable, reaction } from 'mobx';
+import {
+  action, computed, observable, reaction,
+} from 'mobx';
 import { isMac } from '../environment';
 import Store from './lib/Store';
 
@@ -52,12 +54,12 @@ export default class UIStore extends Store {
   }
 
   @computed get isDarkThemeActive() {
-    const activeAdaptableDarkMode =  this.stores.settings.all.app.darkMode
+    const activeAdaptableDarkMode = this.stores.settings.all.app.darkMode
       && this.stores.settings.all.app.adaptableDarkMode
       && this.shouldUseDarkColors;
     const forcedDarkMode = this.stores.settings.all.app.darkMode
       && !this.stores.settings.all.app.adaptableDarkMode;
-    return activeAdaptableDarkMode || forcedDarkMode
+    return activeAdaptableDarkMode || forcedDarkMode;
   }
 
   @computed get theme() {

@@ -13,7 +13,6 @@ import Select from '../../ui/Select';
 import Toggle from '../../ui/Toggle';
 
 
-
 function escapeHtml(unsafe) {
   return unsafe
     .replace(/&/g, '&amp;')
