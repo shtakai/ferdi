@@ -210,6 +210,7 @@ export function scripts() {
 export function watch() {
   gulp.watch(paths.packages.watch, mvLernaPackages);
   gulp.watch(paths.styles.watch, styles);
+  gulp.watch(paths.verticalStyle.src, verticalStyle);
 
   gulp.watch([paths.src, `${paths.scripts.src}`, `${paths.styles.src}`], mvSrc);
 
