@@ -42,13 +42,24 @@ function generateAccentStyle(color) {
   return style;
 }
 
-function generateServiceRibbonWidthStyle(widthStr, iconSizeStr) {
+function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical) {
   const width = Number(widthStr);
   const iconSize = Number(iconSizeStr) - iconSizeBias;
 
-  return `
+  return vertical ? `
+    .tab-item {
+      width: ${width - 2}px !important;
+      height: ${width - 5 + iconSize}px !important;
+    }
+    .tab-item .tab-item__icon {
+      width: ${(width / 2) + iconSize}px !important;
+    }
+    .sidebar__button {
+      font-size: ${width / 3}px !important;
+    }
+  ` : `
     .sidebar {
-      width: ${width}px !important;
+      width: ${width - 1}px !important;
     }
     .tab-item {
       width: ${width - 2}px !important;
@@ -79,6 +90,31 @@ function generateShowDragAreaStyle(accentColor) {
   `;
 }
 
+function generateVerticalStyle(widthStr) {
+  if (!document.getElementById('vertical-style')) {
+    const link = document.createElement('link');
+    link.id = 'vertical-style';
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = './styles/vertical.css';
+
+    document.head.appendChild(link);
+  }
+  const width = Number(widthStr);
+
+  return `
+  .app_service {
+    top: ${width}px !important;
+  }
+  .darwin .sidebar {
+    height: ${width + 19}px !important;
+  }
+  .darwin .sidebar .sidebar__button--workspaces.is-active {
+      height: ${width - 20}px !important;
+  }
+  `;
+}
+
 function generateStyle(settings) {
   let style = '';
 
@@ -87,6 +123,7 @@ function generateStyle(settings) {
     serviceRibbonWidth,
     iconSize,
     showDragArea,
+    useVerticalStyle,
   } = settings;
 
   if (accentColor !== DEFAULT_APP_SETTINGS.accentColor) {
@@ -94,10 +131,16 @@ function generateStyle(settings) {
   }
   if (serviceRibbonWidth !== DEFAULT_APP_SETTINGS.serviceRibbonWidth
       || iconSize !== DEFAULT_APP_SETTINGS.iconSize) {
-    style += generateServiceRibbonWidthStyle(serviceRibbonWidth, iconSize);
+    style += generateServiceRibbonWidthStyle(serviceRibbonWidth, iconSize, useVerticalStyle);
   }
   if (showDragArea) {
     style += generateShowDragAreaStyle(accentColor);
+  }
+  if (useVerticalStyle) {
+    style += generateVerticalStyle(serviceRibbonWidth);
+  } else if (document.getElementById('vertical-style')) {
+    const link = document.getElementById('vertical-style');
+    document.head.removeChild(link);
   }
 
   return style;
@@ -145,6 +188,15 @@ export default function initAppearance(stores) {
   reaction(
     () => (
       settings.all.app.showDragArea
+    ),
+    () => {
+      updateStyle(settings.all.app);
+    },
+  );
+  // Update vertical style
+  reaction(
+    () => (
+      settings.all.app.useVerticalStyle
     ),
     () => {
       updateStyle(settings.all.app);

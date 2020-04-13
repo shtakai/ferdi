@@ -429,6 +429,8 @@ export default @observer class EditSettingsForm extends Component {
 
             <Select field={form.$('iconSize')} />
 
+            <Toggle field={form.$('useVerticalStyle')} />
+
             <Hr />
 
             <Input

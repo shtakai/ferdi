@@ -54,7 +54,7 @@ $sidebar-width: 65px;
 }
 
 .darwin .sidebar {
-  height: $sidebar-width + 22px !important;
+  height: $sidebar-width + 22px;
 
   .sidebar__button--workspaces.is-active {
     height: $sidebar-width - 22px;

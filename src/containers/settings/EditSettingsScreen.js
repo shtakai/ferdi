@@ -134,6 +134,10 @@ const messages = defineMessages({
     id: 'settings.app.form.iconSize',
     defaultMessage: '!!!Service icon size',
   },
+  useVerticalStyle: {
+    id: 'settings.app.form.useVerticalStyle',
+    defaultMessage: '!!!Use vertical style',
+  },
   accentColor: {
     id: 'settings.app.form.accentColor',
     defaultMessage: '!!!Accent color',
@@ -225,6 +229,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         universalDarkMode: settingsData.universalDarkMode,
         serviceRibbonWidth: settingsData.serviceRibbonWidth,
         iconSize: settingsData.iconSize,
+        useVerticalStyle: settingsData.useVerticalStyle,
         accentColor: settingsData.accentColor,
         showMessageBadgeWhenMuted: settingsData.showMessageBadgeWhenMuted,
         showDragArea: settingsData.showDragArea,
@@ -469,6 +474,11 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           value: settings.all.app.iconSize,
           default: DEFAULT_APP_SETTINGS.iconSize,
           options: iconSizes,
+        },
+        useVerticalStyle: {
+          label: intl.formatMessage(messages.useVerticalStyle),
+          value: settings.all.app.useVerticalStyle,
+          default: DEFAULT_APP_SETTINGS.useVerticalStyle,
         },
         accentColor: {
           label: intl.formatMessage(messages.accentColor),

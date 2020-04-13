@@ -129,6 +129,7 @@ export const DEFAULT_APP_SETTINGS = {
   iconSize: iconSizeBias,
   sentry: false,
   navigationBarBehaviour: 'custom',
+  useVerticalStyle: false,
 };
 
 export const DEFAULT_FEATURES_CONFIG = {
