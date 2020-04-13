@@ -431,6 +431,8 @@ export default @observer class EditSettingsForm extends Component {
 
             <Toggle field={form.$('useVerticalStyle')} />
 
+            <Toggle field={form.$('alwaysShowWorkspaces')} />
+
             <Hr />
 
             <Input

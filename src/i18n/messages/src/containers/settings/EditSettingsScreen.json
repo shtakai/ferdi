@@ -364,15 +364,28 @@
     }
   },
   {
+    "id": "settings.app.form.alwaysShowWorkspaces",
+    "defaultMessage": "!!!Always show workspace drawer",
+    "file": "src/containers/settings/EditSettingsScreen.js",
+    "start": {
+      "line": 141,
+      "column": 24
+    },
+    "end": {
+      "line": 144,
+      "column": 3
+    }
+  },
+  {
     "id": "settings.app.form.accentColor",
     "defaultMessage": "!!!Accent color",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
-      "line": 141,
+      "line": 145,
       "column": 15
     },
     "end": {
-      "line": 144,
+      "line": 148,
       "column": 3
     }
   },
@@ -381,11 +394,11 @@
     "defaultMessage": "!!!Display disabled services tabs",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
-      "line": 145,
+      "line": 149,
       "column": 24
     },
     "end": {
-      "line": 148,
+      "line": 152,
       "column": 3
     }
   },
@@ -394,11 +407,11 @@
     "defaultMessage": "!!!Show unread message badge when notifications are disabled",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
-      "line": 149,
+      "line": 153,
       "column": 29
     },
     "end": {
-      "line": 152,
+      "line": 156,
       "column": 3
     }
   },
@@ -407,11 +420,11 @@
     "defaultMessage": "!!!Show draggable area on window",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
-      "line": 153,
+      "line": 157,
       "column": 16
     },
     "end": {
-      "line": 156,
+      "line": 160,
       "column": 3
     }
   },
@@ -420,11 +433,11 @@
     "defaultMessage": "!!!Enable spell checking",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
-      "line": 157,
+      "line": 161,
       "column": 23
     },
     "end": {
-      "line": 160,
+      "line": 164,
       "column": 3
     }
   },
@@ -433,11 +446,11 @@
     "defaultMessage": "!!!Enable GPU Acceleration",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
-      "line": 161,
+      "line": 165,
       "column": 25
     },
     "end": {
-      "line": 164,
+      "line": 168,
       "column": 3
     }
   },
@@ -446,11 +459,11 @@
     "defaultMessage": "!!!Include beta versions",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
-      "line": 165,
+      "line": 169,
       "column": 8
     },
     "end": {
-      "line": 168,
+      "line": 172,
       "column": 3
     }
   },
@@ -459,11 +472,11 @@
     "defaultMessage": "!!!Enable updates",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
-      "line": 169,
+      "line": 173,
       "column": 20
     },
     "end": {
-      "line": 172,
+      "line": 176,
       "column": 3
     }
   },
@@ -472,11 +485,11 @@
     "defaultMessage": "!!!Enable Franz Todos",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
-      "line": 173,
+      "line": 177,
       "column": 15
     },
     "end": {
-      "line": 176,
+      "line": 180,
       "column": 3
     }
   },
@@ -485,11 +498,11 @@
     "defaultMessage": "!!!Keep all workspaces loaded",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
-      "line": 177,
+      "line": 181,
       "column": 27
     },
     "end": {
-      "line": 180,
+      "line": 184,
       "column": 3
     }
   }

@@ -90,7 +90,7 @@ function generateShowDragAreaStyle(accentColor) {
   `;
 }
 
-function generateVerticalStyle(widthStr) {
+function generateVerticalStyle(widthStr, alwaysShowWorkspaces) {
   if (!document.getElementById('vertical-style')) {
     const link = document.createElement('link');
     link.id = 'vertical-style';
@@ -112,6 +112,23 @@ function generateVerticalStyle(widthStr) {
   .darwin .sidebar .sidebar__button--workspaces.is-active {
       height: ${width - 20}px !important;
   }
+  ${alwaysShowWorkspaces ? `
+  .sidebar {
+    width: calc(100% - 300px) !important;
+  }
+  ` : ''}
+  `;
+}
+
+function generateOpenWorkspaceStyle() {
+  return `
+  .app .app__content {
+    width: 100%;
+    transform: translateX(0px);
+  }
+  .sidebar__button--workspaces {
+    display: none;
+  }
   `;
 }
 
@@ -124,6 +141,7 @@ function generateStyle(settings) {
     iconSize,
     showDragArea,
     useVerticalStyle,
+    alwaysShowWorkspaces,
   } = settings;
 
   if (accentColor !== DEFAULT_APP_SETTINGS.accentColor) {
@@ -137,10 +155,13 @@ function generateStyle(settings) {
     style += generateShowDragAreaStyle(accentColor);
   }
   if (useVerticalStyle) {
-    style += generateVerticalStyle(serviceRibbonWidth);
+    style += generateVerticalStyle(serviceRibbonWidth, alwaysShowWorkspaces);
   } else if (document.getElementById('vertical-style')) {
     const link = document.getElementById('vertical-style');
     document.head.removeChild(link);
+  }
+  if (alwaysShowWorkspaces) {
+    style += generateOpenWorkspaceStyle();
   }
 
   return style;
@@ -154,52 +175,21 @@ export default function initAppearance(stores) {
   const { settings } = stores;
   createStyleElement();
 
-  // Update accent color
+  // Update style when settings change
   reaction(
-    () => (
-      settings.all.app.accentColor
-    ),
+    () => ([
+      settings.all.app.accentColor,
+      settings.all.app.serviceRibbonWidth,
+      settings.all.app.iconSize,
+      settings.all.app.showDragArea,
+      settings.all.app.useVerticalStyle,
+      settings.all.app.alwaysShowWorkspaces,
+    ]),
     () => {
       updateStyle(settings.all.app);
     },
     {
       fireImmediately: true,
-    },
-  );
-  // Update service ribbon width
-  reaction(
-    () => (
-      settings.all.app.serviceRibbonWidth
-    ),
-    () => {
-      updateStyle(settings.all.app);
-    },
-  );
-  // Update icon size
-  reaction(
-    () => (
-      settings.all.app.iconSize
-    ),
-    () => {
-      updateStyle(settings.all.app);
-    },
-  );
-  // Update draggable area
-  reaction(
-    () => (
-      settings.all.app.showDragArea
-    ),
-    () => {
-      updateStyle(settings.all.app);
-    },
-  );
-  // Update vertical style
-  reaction(
-    () => (
-      settings.all.app.useVerticalStyle
-    ),
-    () => {
-      updateStyle(settings.all.app);
     },
   );
 }
