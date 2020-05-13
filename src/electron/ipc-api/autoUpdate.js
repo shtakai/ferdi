@@ -19,7 +19,7 @@ export default (params) => {
           if (params.settings.app.get('nightly')) {
             autoUpdater.setFeedURL({
               provider: 'github',
-              repo: 'ferdi-nightly',
+              repo: 'nightlies',
               owner: 'getferdi',
             });
           }
