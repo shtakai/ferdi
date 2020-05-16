@@ -3,6 +3,7 @@ import {
   BrowserWindow,
   shell,
   ipcMain,
+  session,
 } from 'electron';
 import isDevMode from 'electron-is-dev';
 import fs from 'fs-extra';
@@ -151,8 +152,8 @@ const createWindow = () => {
   const mainWindowState = windowStateKeeper({
     defaultWidth: DEFAULT_WINDOW_OPTIONS.width,
     defaultHeight: DEFAULT_WINDOW_OPTIONS.height,
-    maximize: false,
-    fullScreen: false,
+    maximize: true, // Automatically maximizes the window, if it was last clsoed maximized
+    fullScreen: true, // Automatically restores the window to full screen, if it was last closed full screen
   });
 
   let posX = mainWindowState.x || DEFAULT_WINDOW_OPTIONS.x;
@@ -189,6 +190,14 @@ const createWindow = () => {
       preload: path.join(__dirname, 'sentry.js'),
       enableRemoteModule: true,
     },
+  });
+
+  app.on('web-contents-created', (e, contents) => {
+    if (contents.getType() === 'webview') {
+      contents.on('new-window', (event) => {
+        event.preventDefault();
+      });
+    }
   });
 
   mainWindow.webContents.on('did-finish-load', () => {
@@ -392,6 +401,23 @@ ipcMain.on('feature-basic-auth-credentials', (e, { user, password }) => {
 
   authCallback(user, password);
   authCallback = noop;
+});
+
+
+ipcMain.on('modifyRequestHeaders', (e, { modifiedRequestHeaders, serviceId }) => {
+  debug('Received modifyRequestHeaders', modifiedRequestHeaders, serviceId);
+  modifiedRequestHeaders.forEach((headerFilterSet) => {
+    const { headers, requestFilters } = headerFilterSet;
+    session.fromPartition(`persist:service-${serviceId}`).webRequest.onBeforeSendHeaders(requestFilters, (details, callback) => {
+      for (const key in headers) {
+        if (Object.prototype.hasOwnProperty.call(headers, key)) {
+          const value = headers[key];
+          details.requestHeaders[key] = value;
+        }
+      }
+      callback({ requestHeaders: details.requestHeaders });
+    });
+  });
 });
 
 ipcMain.on('feature-basic-auth-cancel', () => {
