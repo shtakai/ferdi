@@ -13,7 +13,7 @@ import PremiumFeatureContainer from '../../ui/PremiumFeatureContainer';
 import Input from '../../ui/Input';
 
 import { FRANZ_TRANSLATION } from '../../../config';
-import { isMac, isWindows } from '../../../environment';
+import { isMac } from '../../../environment';
 
 const {
   systemPreferences,
@@ -91,6 +91,10 @@ const messages = defineMessages({
   translationHelp: {
     id: 'settings.app.translationHelp',
     defaultMessage: '!!!Help us to translate Ferdi into your language.',
+  },
+  spellCheckerLanguageInfo: {
+    id: 'settings.app.spellCheckerLanguageInfo',
+    defaultMessage: '!!!Ferdi uses your Mac\'s build-in spellchecker to check for typos. If you want to change the languages the spellchecker checks for, you can do so in your Mac\'s System Preferences.',
   },
   subheadlineCache: {
     id: 'settings.app.subheadlineCache',
@@ -471,8 +475,8 @@ export default @observer class EditSettingsForm extends Component {
 
                 <Hr />
 
-                {(isMac || isWindows) && <Toggle field={form.$('adaptableDarkMode')} />}
-                {!((isMac || isWindows) && isAdaptableDarkModeEnabled) && <Toggle field={form.$('darkMode')} />}
+                <Toggle field={form.$('adaptableDarkMode')} />
+                {!isAdaptableDarkModeEnabled && <Toggle field={form.$('darkMode')} />}
                 {(isDarkmodeEnabled || isAdaptableDarkModeEnabled) && (
                 <>
                   <Toggle field={form.$('universalDarkMode')} />
@@ -521,8 +525,11 @@ export default @observer class EditSettingsForm extends Component {
                     <Toggle
                       field={form.$('enableSpellchecking')}
                     />
-                    {form.$('enableSpellchecking').value && (
-                    <Select field={form.$('spellcheckerLanguage')} />
+                    {form.$('enableSpellchecking').value && !isMac && (
+                      <Select field={form.$('spellcheckerLanguage')} multiple />
+                    )}
+                    {form.$('enableSpellchecking').value && isMac && (
+                      <p>{intl.formatMessage(messages.spellCheckerLanguageInfo)}</p>
                     )}
                   </Fragment>
                 </PremiumFeatureContainer>
